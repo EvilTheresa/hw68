@@ -19,7 +19,7 @@ async function makeRequest(url, method = 'POST') {
 
 async function onClick(event) {
     event.preventDefault();
-    let button = event.target;
+    let button = event.currentTarget;
     let articleId = button.getAttribute('data-article-id');
 
 
@@ -28,8 +28,11 @@ async function onClick(event) {
         let response = await makeRequest(url);
         console.log(response);
         button.innerText = response.liked ? 'Unlike' : 'Like';
-        let likesCounter = document.querySelector('.likes-count');
-        likesCounter.innerText = `Likes: ${response.likes_count}`;
+        let likesCounter = document.querySelector(`.likes-count[data-article-id="${articleId}"]`);
+        console.log(likesCounter);
+        if (likesCounter) {
+            likesCounter.innerText = `Likes: ${response.likes_count}`;
+        }
     } catch (error) {
         console.error('Error toggling like:', error);
     }
