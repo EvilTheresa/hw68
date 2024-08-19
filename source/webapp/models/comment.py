@@ -16,6 +16,9 @@ class Comment(BaseModel):
         default=1
     )
 
+    def count_likes(self):
+        return self.commentlike_set.count()
+
     def __str__(self):
         return self.text[:20]
 

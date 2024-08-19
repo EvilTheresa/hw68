@@ -2,3 +2,5 @@ from webapp.views.articles import ArticleListView, ArticleDetailView, CreateArti
     DeleteArticleView
 
 from webapp.views.comments import CreateCommentView, UpdateCommentView, DeleteCommentView
+
+from webapp.views.likes import ArticleLikeToggle, CommentLikeToggle

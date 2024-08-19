@@ -31,6 +31,9 @@ class Article(BaseModel):
     def get_absolute_url(self):
         return reverse("webapp:article_detail", kwargs={"pk": self.pk})
 
+    def count_likes(self):
+        return self.articlelike_set.count()
+
     def __str__(self):
         return f"{self.pk}. {self.title}: {self.author}"
 
