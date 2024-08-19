@@ -3,7 +3,7 @@ from django.db import models
 
 
 class ArticleLike(models.Model):
-    author = models.ForeignKey(
+    user = models.ForeignKey(
         get_user_model(),
         related_name="article_likes",
         on_delete=models.SET_DEFAULT,
@@ -13,7 +13,7 @@ class ArticleLike(models.Model):
 
 
 class CommentLike(models.Model):
-    author = models.ForeignKey(
+    user = models.ForeignKey(
         get_user_model(),
         related_name="comments_likes",
         on_delete=models.SET_DEFAULT,

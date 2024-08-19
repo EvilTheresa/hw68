@@ -1,5 +1,5 @@
 async function makeRequest(url, method = 'POST') {
-    const csrfToken = getCookie('csrftoken');
+    const csrfToken = document.body.getAttribute('data-csrf-token');
     let response = await fetch(url, {
         method: method,
         headers: {

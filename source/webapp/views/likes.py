@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 
 @method_decorator(csrf_exempt, name='dispatch')
 class ArticleLikeToggle(View):
-    def get(self, request, article_id):
+    def post(self, request, article_id):
         article = Article.objects.get(id=article_id)
         like, created = ArticleLike.objects.get_or_create(user=request.user, article=article)
 

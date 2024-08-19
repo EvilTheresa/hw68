@@ -16,5 +16,5 @@ urlpatterns = [
     path('article/<int:pk>/comment/create/', CreateCommentView.as_view(), name='create_comment'),
     path('comment/<int:pk>/update/', UpdateCommentView.as_view(), name='update_comment'),
     path('comment/<int:pk>/delete/', DeleteCommentView.as_view(), name='delete_comment'),
-    path('api/article/<int:article_id>/toggle_like/', ArticleLikeToggle.as_view(), name='article_like'),
+    path('api/article/<int:article_id>/toggle_like/', ArticleLikeToggle.as_view(), name='article_like_toggle'),
 ]
