@@ -1,24 +1,19 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.core.exceptions import PermissionDenied
-from django.db.models import Q
-from django.shortcuts import redirect
+from django.db.models import Q, Exists, OuterRef, Count
 from django.urls import reverse_lazy
 from django.utils.http import urlencode
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from webapp.forms import ArticleForm, SearchForm
-from webapp.models import Article
+from webapp.models import Article, ArticleLike
 
 
 class ArticleListView(ListView):
-    # queryset = Article.objects.filter(title__contains="Стат")
     model = Article
     template_name = "articles/index.html"
     ordering = ['-created_at']
     context_object_name = "articles"
     paginate_by = 5
-
-    # paginate_orphans = 2
 
     def dispatch(self, request, *args, **kwargs):
         print(request.user.is_authenticated, "is_authenticated")
@@ -32,10 +27,19 @@ class ArticleListView(ListView):
     def get_search_value(self):
         form = self.form
         if form.is_valid():
-            return form.cleaned_data['search']
+            self.search_ = form.cleaned_data['search']
+            return self.search_
 
     def get_queryset(self):
+        user = self.request.user
         queryset = super().get_queryset()
+
+        queryset = queryset.annotate(
+            likes_count=Count('articlelike'),
+            user_has_liked=Exists(ArticleLike.objects.filter(
+                user=user, article_id=OuterRef('pk')
+            ))
+        )
         if self.search_value:
             queryset = queryset.filter(
                 Q(title__contains=self.search_value) | Q(author__contains=self.search_value)
