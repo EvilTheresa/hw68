@@ -15,8 +15,17 @@ def add(request, *args, **kwargs):
         }
         response = JsonResponse(my_dict)
     elif request.method == 'POST':
-        answer = json.loads(request.body).get("A") + json.loads(request.body).get("B")
-        response = JsonResponse({'answer': answer})
+        try:
+            data = json.loads(request.body)
+            a = data.get("A")
+            b = data.get("B")
+            if isinstance(a, int) and isinstance(b, int):
+                answer = a + b
+                return JsonResponse({'answer': answer})
+            else:
+                return JsonResponse({'error': 'Numbers only!'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
     else:
         response = HttpResponseNotAllowed(permitted_methods=["GET", "POST"])
 
@@ -31,8 +40,17 @@ def subtract(request):
         }
         response = JsonResponse(my_dict)
     elif request.method == 'POST':
-        answer = json.loads(request.body).get("A") - json.loads(request.body).get("B")
-        response = JsonResponse({'answer': answer})
+        try:
+            data = json.loads(request.body)
+            a = data.get("A")
+            b = data.get("B")
+            if isinstance(a, int) and isinstance(b, int):
+                answer = a - b
+                return JsonResponse({'answer': answer})
+            else:
+                return JsonResponse({'error': 'Numbers only!'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
     else:
         response = HttpResponseNotAllowed(permitted_methods=["GET", "POST"])
 
@@ -40,11 +58,53 @@ def subtract(request):
 
 
 def multiply(request):
-    return HttpResponse("Hello hi ")
+    if request.method == 'GET':
+        my_dict = {
+            "A": int(5),
+            "B": int(5),
+        }
+        response = JsonResponse(my_dict)
+    elif request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            a = data.get("A")
+            b = data.get("B")
+            if isinstance(a, int) and isinstance(b, int):
+                answer = a * b
+                return JsonResponse({'answer': answer})
+            else:
+                return JsonResponse({'error': 'Numbers only!'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    else:
+        response = HttpResponseNotAllowed(permitted_methods=["GET", "POST"])
+
+    return response
 
 
 def divide(request):
-    return HttpResponse("Hello hi ")
+    if request.method == 'GET':
+        my_dict = {
+            "A": int(5),
+            "B": int(5),
+        }
+        response = JsonResponse(my_dict)
+    elif request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            a = data.get("A")
+            b = data.get("B")
+            if isinstance(a, int) and isinstance(b, int):
+                answer = a / b
+                return JsonResponse({'answer': answer})
+            else:
+                return JsonResponse({'error': 'Numbers only!'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=400)
+    else:
+        response = HttpResponseNotAllowed(permitted_methods=["GET", "POST"])
+
+    return response
 
 
 @ensure_csrf_cookie
