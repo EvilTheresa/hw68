@@ -1,11 +1,11 @@
 import json
-from json import JSONDecodeError
 
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse, HttpResponseNotAllowed, HttpResponseBadRequest
+from django.http import JsonResponse, HttpResponse, HttpResponseNotAllowed
 from django.views.decorators.csrf import ensure_csrf_cookie
 
-
+def index(request):
+    return render(request, 'index.html')
 # Create your views here.
 def add(request, *args, **kwargs):
     if request.method == 'GET':

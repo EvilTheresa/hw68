@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Document</title>
+</head>
+<body>
+    <input type="number" id="inputA" placeholder="Enter number A">
+    <input type="number" id="inputB" placeholder="Enter number B"><br><br>
+    <button data-operation="add" onclick="numOper('add')">Add</button>
+    <button data-operation="subtract" onclick="numOper('subtract')">Subtract</button>
+    <button data-operation="multiply" onclick="numOper('multiply')">Multiply</button>
+    <button data-operation="divide" onclick="numOper('divide')">Divide</button>
+    <div id="result" class="result"></div>
+    {% load static %}
+    <script src="{% static 'js/script2.js' %}"></script>
+</body>
+</html>
