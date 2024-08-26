@@ -18,7 +18,6 @@ def get_csrf_token(request):
     else:
         return HttpResponseNotAllowed(permitted_methods=["GET"])
 
-
 class ArticleDetailView(APIView):
     def get(self, request, *args, **kwargs):
         articles = Article.objects.order_by('-created_at')
