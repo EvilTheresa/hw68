@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ..serializers import ArticleSerializer
-from article_projects.source.webapp.models.article import Article
+from webapp.models.article import Article
 
 
 # Create your views here.
@@ -28,7 +28,6 @@ class ArticleDetailView(APIView):
 class ArticleCreateView(APIView):
     def post(self, request, *args, **kwargs):
         request_data = request.data.copy()
-        request_data["test_id"] = 1
         serializer = ArticleSerializer(data=request_data)
         serializer.is_valid(raise_exception=True)
         article = serializer.save()
@@ -50,4 +49,4 @@ class ArticleDeleteView(APIView):
     def delete(self, request, *args, **kwargs):
         article = get_object_or_404(Article, pk=self.kwargs['pk'])
         article.delete()
-        return Response(article.data, status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_204_NO_CONTENT)
