@@ -1,1 +1,1 @@
-from articles import ArticleView
+from articles import ArticleDetailView, ArticleCreateView, ArticleUpdateView, ArticleDeleteView

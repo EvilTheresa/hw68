@@ -19,7 +19,7 @@ def get_csrf_token(request):
         return HttpResponseNotAllowed(permitted_methods=["GET"])
 
 
-class ArticleView(APIView):
+class ArticleDetailView(APIView):
     def get(self, request, *args, **kwargs):
         articles = Article.objects.order_by('-created_at')
         serializer = ArticleSerializer(articles, many=True)
@@ -45,3 +45,10 @@ class ArticleUpdateView(APIView):
         article = serializer.save()
         article_data = ArticleSerializer(article).data
         return Response(article_data, status=status.HTTP_200_OK)
+
+
+class ArticleDeleteView(APIView):
+    def delete(self, request, *args, **kwargs):
+        article = get_object_or_404(Article, pk=self.kwargs['pk'])
+        article.delete()
+        return Response(article.data, status=status.HTTP_204_NO_CONTENT)
