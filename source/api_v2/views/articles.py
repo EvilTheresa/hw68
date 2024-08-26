@@ -6,8 +6,8 @@ from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from serializers import ArticleSerializer
-from ..webapp.models.article import Article
+from ..serializers import ArticleSerializer
+from article_projects.source.webapp.models.article import Article
 
 
 # Create your views here.
@@ -20,12 +20,13 @@ def get_csrf_token(request):
 
 
 class ArticleView(APIView):
-
     def get(self, request, *args, **kwargs):
         articles = Article.objects.order_by('-created_at')
         serializer = ArticleSerializer(articles, many=True)
         return Response(serializer.data)
 
+
+class ArticleCreateView(APIView):
     def post(self, request, *args, **kwargs):
         request_data = request.data.copy()
         request_data["test_id"] = 1
@@ -35,6 +36,8 @@ class ArticleView(APIView):
         article_data = ArticleSerializer(article).data
         return Response(article_data, status=status.HTTP_201_CREATED)
 
+
+class ArticleUpdateView(APIView):
     def put(self, request, *args, pk, **kwargs):
         article = get_object_or_404(Article, pk=pk)
         serializer = ArticleSerializer(data=request.data, instance=article)
